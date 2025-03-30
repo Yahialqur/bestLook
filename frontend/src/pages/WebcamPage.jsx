@@ -1,6 +1,6 @@
 import React, { useState, useRef, useCallback, useEffect } from 'react'
 import Webcam from 'react-webcam'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'  // <-- Import this
 import '../styles/WebcamPage.css'
 
 const videoConstraints = {
@@ -16,6 +16,9 @@ const WebcamPage = () => {
   const canvasRef = useRef(null)
   const detectionIntervalRef = useRef(null)
 
+  // Use navigate hook to redirect to results page
+  const navigate = useNavigate()
+
   // === Load the Haar cascade from public folder ===
   useEffect(() => {
     fetch('/haarcascade_frontalface_default.xml')
@@ -25,7 +28,7 @@ const WebcamPage = () => {
         try {
           window.cv.FS_unlink('/haarcascade_frontalface_default.xml')
         } catch (e) {
-          // if file didn't exist, that's okay
+          // file didn't exist, that's okay
         }
 
         // Create the file in the in-memory filesystem
@@ -197,7 +200,14 @@ const WebcamPage = () => {
         .then((res) => res.json())
         .then((data) => {
           console.log('Server response:', data)
-          alert(`Model result: ${data.result}`)
+          // Instead of alerting, we navigate to /results
+          // passing faceShape & hairstyles in location.state
+          navigate('/results', {
+            state: {
+              faceShape: data.result,      // e.g. "square"
+              hairstyles: data.hairstyles // array of {id, name, image}
+            },
+          })
         })
         .catch((error) => {
           console.error('Error:', error)
@@ -205,7 +215,7 @@ const WebcamPage = () => {
     } catch (err) {
       console.error('Face detection error:', err)
     }
-  }, [gender, cascade])
+  }, [gender, cascade, navigate])
 
   return (
     <div className="webcam-page">

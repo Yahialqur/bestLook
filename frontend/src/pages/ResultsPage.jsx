@@ -5,12 +5,8 @@ import '../styles/ResultsPage.css'
 
 const ResultsPage = () => {
   const location = useLocation()
-  // Pull these out from location.state
-  // faceShape => "square", "round", etc.
-  // hairstyles => array of { id, name, image }
   const { faceShape, hairstyles } = location.state || {}
 
-  // If user somehow navigates here directly, handle missing data
   if (!faceShape || !hairstyles) {
     return (
       <div className="results-page">
