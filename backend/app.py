@@ -20,7 +20,7 @@ device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 # 2) Load the weights from your saved file
 model = load_model(
     model_arch,
-    "/Users/jalqur/Desktop/projects/faceShapeStyle/best_model.pth",
+    "/Users/jonkruja/Downloads/best_model.pth",
     device
 )
 
@@ -87,7 +87,7 @@ hairstyle_recommendations = {
             { "id": 37, "name": "Side-Swept Bangs", "image": "/images/female/round/side-swept-bangs.jpg" },
             { "id": 38, "name": "Asymmetrical Bob", "image": "/images/female/round/asymmetrical-bob.jpg" },
             { "id": 39, "name": "High Bun or Ponytail", "image": "/images/female/round/high-bun.jpg" },
-            { "id": 40, "name": "Layered Shag Cut", "image": "/images/female/round/layered-shag.jpg" }
+            { "id": 40, "name": "Shag Cut", "image": "/images/female/round/layered-shag.jpg" }
         ]
     },
     "square": {
