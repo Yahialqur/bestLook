@@ -4,7 +4,7 @@ import './Footer.css'
 const Footer = () => {
   return (
     <footer className="footer">
-      <p>© {new Date().getFullYear()} FaceShapeFinder. All rights reserved.</p>
+      <p>© {new Date().getFullYear()} Best Look. All rights reserved.</p>
     </footer>
   )
 }
