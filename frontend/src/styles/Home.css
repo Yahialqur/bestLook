@@ -22,8 +22,8 @@
   .final-cta-section {
     width: 100%;
   }
+
   
-  /* ========== HERO SECTION ========== */
   /* Hero Section */
 .hero-section {
     position: relative;          
@@ -112,7 +112,7 @@
     opacity: 0.8;
   }
   
-  /* ========== TRANSFORM SECTION ========== */
+  /* TRANSFORM SECTION */
   .transform-section {
     background-color: var(--black-bg);
     text-align: center;
