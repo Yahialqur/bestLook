@@ -14,15 +14,13 @@ const Home = () => {
               Discover the perfect hairstyle, facial hair, glasses, and accessories
               that complement your unique face shape.
             </p>
-            <button className="gold-button">Get Started</button>
+            <button className="gold-button" onClick={() => window.location.href = '/webcam'}>Get Started</button>
           </div>
   
-          {/* The scroll indicator arrow.
-              It can be a link to the next section (#transform) or any ID. */}
           <a href="#transform" className="hero-scroll-indicator">▼</a>
         </section>
   
-        {/* ========== TRANSFORM SECTION (BLACK BACKGROUND) ========== */}
+        {/* TRANSFORM SECTION (BLACK BACKGROUND) */}
         <section className="transform-section" id="transform">
           <h2>
             Transform Your <span className="gold-text">Appearance</span>
@@ -41,10 +39,10 @@ const Home = () => {
             </div>
           </div>
   
-          <button className="gold-button">Try It Now!</button>
+          <button className="gold-button" onClick={() => window.location.href = '/webcam'}>Try It Now!</button>
         </section>
   
-        {/* ========== ABOUT US SECTION (BLACK BACKGROUND) ========== */}
+        {/* ABOUT US SECTION (BLACK BACKGROUND) */}
         <section className="about-section">
           <h2>About <span className="gold-text">Us</span></h2>
           <p className="about-text">
@@ -78,7 +76,7 @@ const Home = () => {
           </div>
         </section>
   
-        {/* ========== FINAL CTA SECTION (WHITE BACKGROUND) ========== */}
+        {/* FINAL CTA SECTION (WHITE BACKGROUND) */}
         <section className="final-cta-section">
           <h2>Ready to discover your perfect look?</h2>
           <button className="gold-button">Get Started Now</button>
