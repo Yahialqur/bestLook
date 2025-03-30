@@ -15,7 +15,6 @@ function App() {
           <Route path="/webcam" element={<WebcamPage />} />
           <Route path="/results" element={<ResultsPage />} />
         </Routes>
-        <Footer />
       </div>
     </Router>
   )

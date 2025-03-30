@@ -1,6 +1,6 @@
 import React, { useState, useRef, useCallback, useEffect } from 'react'
 import Webcam from 'react-webcam'
-import { useNavigate } from 'react-router-dom'  // <-- Import this
+import { useNavigate } from 'react-router-dom' 
 import '../styles/WebcamPage.css'
 
 const videoConstraints = {
@@ -11,7 +11,7 @@ const videoConstraints = {
 
 const WebcamPage = () => {
   const [gender, setGender] = useState(null)
-  const [cascade, setCascade] = useState(null) // Haar cascade
+  const [cascade, setCascade] = useState(null) 
   const webcamRef = useRef(null)
   const canvasRef = useRef(null)
   const detectionIntervalRef = useRef(null)
@@ -204,7 +204,7 @@ const WebcamPage = () => {
           // passing faceShape & hairstyles in location.state
           navigate('/results', {
             state: {
-              faceShape: data.result,      // e.g. "square"
+              faceShape: data.result,    
               hairstyles: data.hairstyles // array of {id, name, image}
             },
           })

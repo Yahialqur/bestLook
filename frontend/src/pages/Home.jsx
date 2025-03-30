@@ -1,9 +1,15 @@
 import React from 'react'
 import '../styles/Home.css'
 
+import Footer from '../components/Footer'
+
+import ugly from "../assets/home_images/home_ugly.png"
+import sexy from "../assets/home_images/home_sexy.png"
+
 const Home = () => {
     return (
-      <main className="home">
+      <>
+        <main className="home">
         {/*  HERO SECTION (WHITE BACKGROUND) */}
         <section className="hero-section" id="hero">
           <div className="hero-content">
@@ -20,7 +26,7 @@ const Home = () => {
           <a href="#transform" className="hero-scroll-indicator">▼</a>
         </section>
   
-        {/* TRANSFORM SECTION (BLACK BACKGROUND) */}
+        {/* TRANSFORM SECTION */}
         <section className="transform-section" id="transform">
           <h2>
             Transform Your <span className="gold-text">Appearance</span>
@@ -29,12 +35,15 @@ const Home = () => {
           <div className="before-after-container">
             <div className="image-box">
               <h3>Before</h3>
-              <div className="image-placeholder" />
+              <img src={ugly} alt="Before - Without personalized recommendations" className="image-placeholder" />
               <p className="image-caption">Without personalized recommendations</p>
+            </div>
+            <div className="arrow-box">
+              <span className="gold-arrow">➜</span>
             </div>
             <div className="image-box">
               <h3>After</h3>
-              <div className="image-placeholder" />
+              <img src={sexy} alt="After - With our personalized recommendations" className="image-placeholder" />
               <p className="image-caption">With our personalized recommendations</p>
             </div>
           </div>
@@ -42,7 +51,7 @@ const Home = () => {
           <button className="gold-button" onClick={() => window.location.href = '/webcam'}>Try It Now!</button>
         </section>
   
-        {/* ABOUT US SECTION (BLACK BACKGROUND) */}
+        {/* ABOUT US SECTION */}
         <section className="about-section">
           <h2>About <span className="gold-text">Us</span></h2>
           <p className="about-text">
@@ -82,6 +91,8 @@ const Home = () => {
           <button className="gold-button">Get Started Now</button>
         </section>
       </main>
+      < Footer />
+      </>
     )
   }
   
