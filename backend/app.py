@@ -20,7 +20,7 @@ device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 # 2) Load the weights from your saved file
 model = load_model(
     model_arch,
-    "/Users/jalqur/Desktop/projects/faceShapeStyle/best_model.pth",
+    "/Users/jonkruja/downloads/best_model.pth",
     device
 )
 
