@@ -1,0 +1,84 @@
+/* src/styles/ResultsPage.css */
+
+.results-page {
+    /* Similar layout approach as .webcam-page */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 2rem;
+    background-color: var(--white-bg);
+  }
+  
+  .results-page h1 {
+    margin-bottom: 1.5rem;
+    color: #000;
+  }
+  
+  .results-page h2 {
+    margin-top: 1.5rem;
+    margin-bottom: 1rem;
+    color: #000;
+    font-weight: 600;
+  }
+  
+  /* Face shape name text */
+  .face-shape-name {
+    font-size: 1.4rem;
+    font-weight: bold;
+    color: var(--gold);
+    margin-bottom: 1.5rem;
+  }
+  
+  /* Container for the hairstyle boxes */
+  .hairstyle-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+    justify-content: center;
+    margin-bottom: 2rem;
+  }
+  
+  /* Each individual hairstyle card */
+  .hairstyle-card {
+    background-color: #ddd;           /* Light gray background similar to .gender-button */
+    border-radius: 8px;
+    padding: 1rem;
+    width: 200px;
+    text-align: center;
+    transition: background-color 0.2s ease;
+  }
+  
+  .hairstyle-card:hover {
+    background-color: #bbb;
+  }
+  
+  .hairstyle-card h3 {
+    margin: 0.5rem 0;
+    color: #000;
+    font-size: 1.1rem;
+  }
+  
+  /* Image inside each card */
+  .hairstyle-image {
+    max-width: 100%;
+    border-radius: 6px;
+    margin-bottom: 0.5rem;
+    border: 2px solid #000;
+  }
+  
+  /* "Try Now" button styling */
+  .try-now-button {
+    background-color: var(--gold);
+    color: #fff;
+    border: none;
+    padding: 0.75rem 1.5rem;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: opacity 0.2s ease;
+  }
+  
+  .try-now-button:hover {
+    opacity: 0.8;
+  }
+  
