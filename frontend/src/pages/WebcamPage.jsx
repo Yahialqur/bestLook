@@ -24,7 +24,7 @@ const WebcamPage = () => {
     const imageSrc = webcamRef.current.getScreenshot()
 
     // Send the base64 + gender to the backend
-    fetch('http://localhost:5000/api/analyze', {
+    fetch('http://127.0.0.1:5000/api/analyze', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

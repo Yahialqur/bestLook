@@ -1,22 +1,30 @@
 import base64
 import io
+from flask_cors import CORS
 from flask import Flask, request, jsonify
 from PIL import Image
+import torch
+import torchvision.models as models
+
+from inference_utils import load_model, predict_face_shape, FACE_SHAPE_MAP
 
 app = Flask(__name__)
+CORS(app)
 
-# ---------------
-# Load your model here once (optional).
-# For illustration, we’ll just hardcode a face shape prediction.
-# ---------------
-# Example: 
-# import torch
-# model = torch.load('face_shape_model.pth')
-# model.eval()
+# 1) Initialize the same model architecture you used in training
+model_arch = models.vgg16(pretrained=False)  
+model_arch.classifier[6].out_features = len(FACE_SHAPE_MAP)
 
-# ---------------
-# Hairstyle recommendations (converted from your JS map to a Python dict).
-# ---------------
+device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
+
+# 2) Load the weights from your saved file
+model = load_model(
+    model_arch,
+    "/Users/jalqur/Desktop/projects/faceShapeStyle/best_model.pth",
+    device
+)
+
+
 hairstyle_recommendations = {
     "heart": {
         "male": [
@@ -102,11 +110,7 @@ hairstyle_recommendations = {
 
 @app.route('/api/analyze', methods=['POST'])
 def analyze_image():
-    """
-    Endpoint to receive base64 image data + gender,
-    run face shape prediction, and return
-    recommended hairstyles.
-    """
+    print("Received POST to /api/analyze", flush=True)
     data = request.get_json()
     image_data = data.get("image", "")
     gender = data.get("gender", "")
@@ -115,27 +119,21 @@ def analyze_image():
         return jsonify({"error": "Invalid data received"}), 400
 
     try:
-        # 1) Decode the base64 image (remove the "data:image/jpeg;base64," part first).
+        # 1) Extract the base64 portion from "data:image/jpeg;base64,XYZ..."
         base64_str = image_data.split(",")[1]
         decoded_bytes = base64.b64decode(base64_str)
 
-        # 2) Convert the bytes to a PIL image.
-        pil_image = Image.open(io.BytesIO(decoded_bytes))
+        # 2) Convert the bytes to a PIL image
+        pil_image = Image.open(io.BytesIO(decoded_bytes)).convert("RGB")
 
-        # 3) Run your face-shape classification model.
-        #    For demonstration, we’ll hardcode a result.
-        #    Replace this with model inference code:
-        # face_shape = predict_face_shape(pil_image, model)
-        face_shape = "oval"  # Hardcoded example
+        # 3) Predict the face shape
+        face_shape = predict_face_shape(pil_image, model, device)
 
-        # 4) Get hairstyles from the map based on face_shape + gender.
-        #    Make sure you handle potential errors if face_shape is not recognized.
-        if face_shape in hairstyle_recommendations:
-            recommended = hairstyle_recommendations[face_shape][gender]
-        else:
-            recommended = []
+        # 4) Retrieve recommended hairstyles
+        recommended = hairstyle_recommendations.get(face_shape, {}).get(gender, [])
+        print("Predicted face shape:", face_shape, flush=True)
+        print("Recommended hairstyles:", recommended, flush=True)
 
-        # 5) Return result to frontend.
         return jsonify({
             "result": face_shape,
             "hairstyles": recommended
