@@ -20,13 +20,6 @@ This project uses AI to detect your face shape through a webcam and recommends p
 
 ---
 
-## 📁 Directory Structure
-
-faceShape/ ├── backend/ # Flask backend (model inference + API) ├── frontend/ # React frontend (webcam, UI, results) ├── README.md # Main README (you are here)
-
-
----
-
 ## 📬 API Overview
 
 ### `POST /api/analyze`
@@ -58,10 +51,10 @@ Accepts a base64-encoded image and selected gender, returns a predicted face sha
 
 ---
 
-## Authors:
+## 👨‍💻 Authors
 
-Yahia Alqurnawi
-    Github: @Yahialqur
+- **Yahia Alqurnawi**  
+  GitHub: [@Yahialqur](https://github.com/Yahialqur)
 
-Jon Kruja 
-    Github: @Spec1alKs
+- **Jon Kruja**  
+  GitHub: [@Spec1alKs](https://github.com/Spec1alKs)
