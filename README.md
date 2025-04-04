@@ -51,6 +51,22 @@ Accepts a base64-encoded image and selected gender, returns a predicted face sha
 
 ---
 
+## 🖼️ Demo Screenshots
+
+### 🏠 Home Page
+![Home Page](./assets/bestLook1.png)
+
+### ✨ Our Mission
+![Our Mission](./assets/bestLook2.png)
+
+### 📸 Webcam Capture
+![Webcam](./assets/bestLook3.png)
+
+### 🧠 Results Page
+![Results Page](./assets/bestLook4.png)
+
+---
+
 ## 👨‍💻 Authors
 
 <table>
