@@ -53,8 +53,6 @@ Accepts a base64-encoded image and selected gender, returns a predicted face sha
 
 ## 👨‍💻 Authors
 
-## 👨‍💻 Authors
-
 <table>
   <tr>
     <td align="center">
