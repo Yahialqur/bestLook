@@ -11,13 +11,13 @@ from inference_utils import load_model, predict_face_shape, FACE_SHAPE_MAP
 app = Flask(__name__)
 CORS(app)
 
-# 1) Initialize the same model architecture you used in training
+# 1) Initialize model architecture
 model_arch = models.vgg16(pretrained=False)  
 model_arch.classifier[6].out_features = len(FACE_SHAPE_MAP)
 
 device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 
-# 2) Load the weights from your saved file
+# 2) Load weights from saved file
 model = load_model(
     model_arch,
     "/Users/jalqur/Desktop/projects/faceShapeStyle/best_model.pth",
@@ -119,14 +119,14 @@ def analyze_image():
         return jsonify({"error": "Invalid data received"}), 400
 
     try:
-        # 1) Extract the base64 portion from "data:image/jpeg;base64,XYZ..."
+        # 1) Extract the base64 portion 
         base64_str = image_data.split(",")[1]
         decoded_bytes = base64.b64decode(base64_str)
 
         # 2) Convert the bytes to a PIL image
         pil_image = Image.open(io.BytesIO(decoded_bytes)).convert("RGB")
 
-        # 3) Predict the face shape
+        # 3) Predict face shape
         face_shape = predict_face_shape(pil_image, model, device)
 
         # 4) Retrieve recommended hairstyles

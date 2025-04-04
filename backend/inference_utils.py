@@ -1,10 +1,8 @@
-# inference_utils.py
 import torch
 import torchvision.transforms as T
 from PIL import Image
 
 # Map model output indices to face-shape labels
-# Ensure the order matches the one you used during training
 FACE_SHAPE_MAP = {
     0: "heart",
     1: "oblong",
@@ -32,12 +30,12 @@ def predict_face_shape(pil_image, model, device):
     and returns the face shape label (e.g., 'oval', 'round', etc.).
     """
 
-    # Define the same transforms used in your training process
+    # Define the same transforms used in training
     transform = T.Compose([
-        T.Resize((224, 224)),  # or whatever size you used
+        T.Resize((224, 224)),  
         T.ToTensor(),
         T.Normalize(
-            mean=[0.485, 0.456, 0.406],  # typical ImageNet means & stds
+            mean=[0.485, 0.456, 0.406],  
             std=[0.229, 0.224, 0.225]
         )
     ])
@@ -46,11 +44,10 @@ def predict_face_shape(pil_image, model, device):
     input_tensor = transform(pil_image).unsqueeze(0).to(device)
 
     with torch.no_grad():
-        outputs = model(input_tensor)  # shape: (1, num_classes)
-        # Use max(1) to get the predicted class index
+        outputs = model(input_tensor) 
         _, predicted = outputs.max(dim=1)
         pred_idx = predicted.item()
 
-    # Map the predicted index to its corresponding face shape string
+    # Map the predicted index to corresponding face shape
     face_shape = FACE_SHAPE_MAP[pred_idx]
     return face_shape
