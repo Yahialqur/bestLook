@@ -13,7 +13,7 @@ This project uses AI to detect your face shape through a webcam and recommends p
 
 ## ✨ Features
 
-- Real-time face detection with webcam
+- Face detection with webcam
 - Face shape classification using a fine-tuned VGG16 model
 - Personalized hairstyle suggestions for both male and female users
 - Interactive UI to view results and try different looks
