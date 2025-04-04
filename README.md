@@ -53,8 +53,17 @@ Accepts a base64-encoded image and selected gender, returns a predicted face sha
 
 ## 👨‍💻 Authors
 
-- **Yahia Alqurnawi**  
-  GitHub: [@Yahialqur](https://github.com/Yahialqur)
-
-- **Jon Kruja**  
-  GitHub: [@Spec1alKs](https://github.com/Spec1alKs)
+<table>
+  <tr>
+    <td align="center">
+      <img src="https://avatars.githubusercontent.com/u/132758381?v=4" width="100px;" alt="Yahia Alqurnawi"/><br/>
+      <strong>Yahia Alqurnawi</strong><br/>
+      <a href="https://github.com/Yahialqur">@Yahialqur</a>
+    </td>
+    <td align="center">
+      <img src="https://avatars.githubusercontent.com/u/114791100?v=4" width="100px;" alt="Jon Kruja"/><br/>
+      <strong>Jon Kruja</strong><br/>
+      <a href="https://github.com/Spec1alKs">@Spec1alKs</a>
+    </td>
+  </tr>
+</table>
