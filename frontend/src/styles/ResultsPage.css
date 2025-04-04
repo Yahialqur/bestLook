@@ -1,7 +1,4 @@
-/* src/styles/ResultsPage.css */
-
 .results-page {
-    /* Similar layout approach as .webcam-page */
     display: flex;
     flex-direction: column;
     align-items: center;

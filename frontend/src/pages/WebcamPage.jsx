@@ -16,10 +16,9 @@ const WebcamPage = () => {
   const canvasRef = useRef(null)
   const detectionIntervalRef = useRef(null)
 
-  // Use navigate hook to redirect to results page
   const navigate = useNavigate()
 
-  // === Load the Haar cascade from public folder ===
+  // Load Haar cascade
   useEffect(() => {
     fetch('/haarcascade_frontalface_default.xml')
       .then((res) => res.arrayBuffer())
@@ -28,10 +27,9 @@ const WebcamPage = () => {
         try {
           window.cv.FS_unlink('/haarcascade_frontalface_default.xml')
         } catch (e) {
-          // file didn't exist, that's okay
         }
 
-        // Create the file in the in-memory filesystem
+        // Create the file in the in memory filesystem
         window.cv.FS_createDataFile('/', 'haarcascade_frontalface_default.xml', data, true, false)
         
         // Load cascade
@@ -43,11 +41,11 @@ const WebcamPage = () => {
       .catch((err) => console.error('Failed to load cascade file:', err))
   }, [])
 
-  // === Function to detect faces in the current frame and draw boxes ===
+  // Function to detect faces in the current frame and draw boxes
   const detectFaceInRealTime = useCallback(() => {
     if (!webcamRef.current || !canvasRef.current || !cascade) return
 
-    // 1) Get the current frame from react-webcam
+    // Get the current frame from react webcam
     const imageSrc = webcamRef.current.getScreenshot()
     if (!imageSrc) return
 
@@ -96,7 +94,8 @@ const WebcamPage = () => {
     }
   }, [cascade])
 
-  // === Run detection on an interval (200ms) as soon as the page loads ===
+  // Run detection on an interval as soon as the page loads 
+  // Currently 200ms
   useEffect(() => {
     detectionIntervalRef.current = setInterval(() => {
       detectFaceInRealTime()
@@ -110,7 +109,7 @@ const WebcamPage = () => {
     }
   }, [detectFaceInRealTime])
 
-  // === Capture + Crop logic ===
+  // Capture and Crop
   const detectAndCropFace = (base64Image) => {
     return new Promise((resolve, reject) => {
       if (!cascade) {
@@ -172,7 +171,7 @@ const WebcamPage = () => {
     })
   }
 
-  // === Capture from webcam, crop, submit to Flask ===
+  // Capture from webcam, crop, submit to Flask
   const captureAndSubmit = useCallback(async () => {
     if (!gender) {
       alert('Please select Male or Female before taking the picture.')
@@ -200,12 +199,10 @@ const WebcamPage = () => {
         .then((res) => res.json())
         .then((data) => {
           console.log('Server response:', data)
-          // Instead of alerting, we navigate to /results
-          // passing faceShape & hairstyles in location.state
           navigate('/results', {
             state: {
               faceShape: data.result,    
-              hairstyles: data.hairstyles // array of {id, name, image}
+              hairstyles: data.hairstyles 
             },
           })
         })
@@ -221,7 +218,6 @@ const WebcamPage = () => {
     <div className="webcam-page">
       <h1>Take Your Picture!</h1>
 
-      {/* Stacked webcam + overlay canvas */}
       <div className="webcam-container">
         <Webcam
           audio={false}

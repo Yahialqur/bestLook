@@ -91,7 +91,7 @@
   .hero-subtitle {
     font-size: 1.125rem;
     color: var(--gray-text);
-    max-width: 600px; /* keep text narrower for readability */
+    max-width: 600px; 
     margin: 0 auto 2rem; 
     line-height: 1.6;
   }
@@ -169,7 +169,7 @@
     color: gold;
   }
   
-  /* ========== ABOUT US SECTION ========== */
+  /* About Us */
   .about-section {
     background-color: var(--white-bg);
     color: #000000;
@@ -197,7 +197,7 @@
   }
   
   .info-card {
-    background-color: #1a1a1a; /* Slightly lighter than black */
+    background-color: #1a1a1a; 
     border-radius: 8px;
     padding: 2rem;
     max-width: 300px;
@@ -215,7 +215,7 @@
     line-height: 1.5;
   }
   
-  /* ========== FINAL CTA SECTION ========== */
+  /* CTA Section */
   .final-cta-section {
     background-color: var(--black-bg);
     text-align: center;

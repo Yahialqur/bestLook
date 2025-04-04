@@ -6,11 +6,12 @@ import Footer from '../components/Footer'
 import ugly from "../assets/home_images/home_ugly.png"
 import sexy from "../assets/home_images/home_sexy.png"
 
+
 const Home = () => {
     return (
       <>
         <main className="home">
-        {/*  HERO SECTION (WHITE BACKGROUND) */}
+        {/*  Hero */}
         <section className="hero-section" id="hero">
           <div className="hero-content">
             <h1>
@@ -26,7 +27,7 @@ const Home = () => {
           <a href="#transform" className="hero-scroll-indicator">▼</a>
         </section>
   
-        {/* TRANSFORM SECTION */}
+        {/* Transform */}
         <section className="transform-section" id="transform">
           <h2>
             Transform Your <span className="gold-text">Appearance</span>
@@ -51,7 +52,7 @@ const Home = () => {
           <button className="gold-button" onClick={() => window.location.href = '/webcam'}>Try It Now!</button>
         </section>
   
-        {/* ABOUT US SECTION */}
+        {/* About Us */}
         <section className="about-section">
           <h2>About <span className="gold-text">Us</span></h2>
           <p className="about-text">
@@ -85,7 +86,7 @@ const Home = () => {
           </div>
         </section>
   
-        {/* FINAL CTA SECTION (WHITE BACKGROUND) */}
+        {/* CTA */}
         <section className="final-cta-section">
           <h2>Ready to discover your perfect look?</h2>
           <button className="gold-button">Get Started Now</button>

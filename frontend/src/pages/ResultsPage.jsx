@@ -1,4 +1,3 @@
-// src/pages/ResultsPage.jsx
 import React from 'react'
 import { useLocation } from 'react-router-dom'
 import '../styles/ResultsPage.css'
@@ -29,7 +28,6 @@ const ResultsPage = () => {
           hairstyles.map((style) => (
             <div key={style.id} className="hairstyle-card">
               <h3>{style.name}</h3>
-              {/* Make sure you have an image at this path */}
               <img src={style.image} alt={style.name} className="hairstyle-image" />
               <button className="try-now-button">Try Now</button>
             </div>
