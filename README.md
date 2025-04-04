@@ -39,9 +39,10 @@ Accepts a base64-encoded image and selected gender, returns a predicted face sha
   "image": "data:image/jpeg;base64,...",
   "gender": "male" | "female"
 }
+```
 
 #### Response:
-
+```json
 {
   "result": "oval",
   "hairstyles": [
@@ -53,6 +54,9 @@ Accepts a base64-encoded image and selected gender, returns a predicted face sha
     ...
   ]
 }
+```
+
+---
 
 ## Authors:
 
