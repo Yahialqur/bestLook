@@ -60,10 +60,10 @@ Accepts a base64-encoded image and selected gender, returns a predicted face sha
 ![Our Mission](./assets/bestLook2.png)
 
 ### 📸 Webcam Capture
-![Webcam](./assets/bestLook3.png)
+![Webcam](./assets/bestLook3.jpg)
 
 ### 🧠 Results Page
-![Results Page](./assets/bestLook4.png)
+![Results Page](./assets/bestLook4.jpg)
 
 ---
 
