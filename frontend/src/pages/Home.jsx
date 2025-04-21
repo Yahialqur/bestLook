@@ -3,6 +3,8 @@ import '../styles/Home.css'
 
 import Footer from '../components/Footer'
 
+import logo from "/bestLook_logo.png"
+
 import ugly from "../assets/home_images/home_ugly.png"
 import sexy from "../assets/home_images/home_sexy.png"
 
@@ -14,6 +16,7 @@ const Home = () => {
         {/*  Hero */}
         <section className="hero-section" id="hero">
           <div className="hero-content">
+            <img src={logo} alt='Best Look Logo' className='logo'></img>
             <h1>
               Find Your <span className="gold-text">Best Look!</span>
             </h1>

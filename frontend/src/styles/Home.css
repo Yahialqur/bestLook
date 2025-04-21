@@ -34,6 +34,11 @@
     align-items: center;
     padding: 0 1rem;
   }
+
+  .logo{
+    width: 20%;
+    height: 20%;
+  }
   
   .hero-content {
     text-align: center;              
