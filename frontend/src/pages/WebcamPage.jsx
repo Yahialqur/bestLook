@@ -1,220 +1,166 @@
-import React, { useState, useRef, useCallback, useEffect } from 'react'
-import Webcam from 'react-webcam'
-import { useNavigate } from 'react-router-dom' 
-import '../styles/WebcamPage.css'
+// src/pages/WebcamPage.jsx
+import React, { useCallback, useEffect, useRef, useState } from 'react';
+import Webcam from 'react-webcam';
+import { useNavigate } from 'react-router-dom';
+import '../styles/WebcamPage.css';
 
-const videoConstraints = {
-  width: 400,
-  height: 300,
-  facingMode: 'user',
-}
+const videoConstraints = { width: 400, height: 300, facingMode: 'user' };
 
 const WebcamPage = () => {
-  const [gender, setGender] = useState(null)
-  const [cascade, setCascade] = useState(null) 
-  const webcamRef = useRef(null)
-  const canvasRef = useRef(null)
-  const detectionIntervalRef = useRef(null)
+  const [gender, setGender]   = useState(null);
+  const [cascade, setCascade] = useState(null);
 
-  const navigate = useNavigate()
+  const webcamRef   = useRef(null);
+  const canvasRef   = useRef(null);
+  const detectTimer = useRef(null);
 
-  // Load Haar cascade
+  const navigate = useNavigate();
+
   useEffect(() => {
-    fetch('/haarcascade_frontalface_default.xml')
-      .then((res) => res.arrayBuffer())
-      .then((buffer) => {
-        const data = new Uint8Array(buffer)
-        try {
-          window.cv.FS_unlink('/haarcascade_frontalface_default.xml')
-        } catch (e) {
+    let mounted = true;
+
+    const initCascade = async () => {
+      if (!mounted) return;
+      try {
+        const buf   = await fetch('/haarcascade_frontalface_default.xml').then(r => r.arrayBuffer());
+        const bytes = new Uint8Array(buf);
+
+        try { window.cv.FS_unlink('/haarcascade_frontalface_default.xml'); } catch { /* ignore */ }
+        window.cv.FS_createDataFile('/', 'haarcascade_frontalface_default.xml',
+                                    bytes, true, false, false);
+
+        const clf = new window.cv.CascadeClassifier();
+        if (!clf.load('haarcascade_frontalface_default.xml')) throw new Error('cascade load failed');
+        if (mounted) setCascade(clf);
+      } catch (e) {
+        console.error(e);
+      }
+    };
+
+    const waitForCv = () => {
+      if (!mounted) return;
+
+      if (window.cv) {
+        if (window.cv.ready) {
+          window.cv.ready.then(initCascade);                
+        } else if (window.cv.onRuntimeInitialized !== undefined) {
+          window.cv.onRuntimeInitialized = initCascade;     
+        } else {
+          initCascade();                                     
         }
+      } else {
+        setTimeout(waitForCv, 50);                           
+      }
+    };
 
-        // Create the file in the in memory filesystem
-        window.cv.FS_createDataFile('/', 'haarcascade_frontalface_default.xml', data, true, false)
-        
-        // Load cascade
-        const classifier = new window.cv.CascadeClassifier()
-        classifier.load('haarcascade_frontalface_default.xml')
-        setCascade(classifier)
-        console.log('Cascade loaded successfully.')
-      })
-      .catch((err) => console.error('Failed to load cascade file:', err))
-  }, [])
+    waitForCv();
+    return () => { mounted = false; };
+  }, []);
 
-  // Function to detect faces in the current frame and draw boxes
-  const detectFaceInRealTime = useCallback(() => {
-    if (!webcamRef.current || !canvasRef.current || !cascade) return
+  const detect = useCallback(() => {
+    if (!cascade || !webcamRef.current || !canvasRef.current) return;
 
-    // Get the current frame from react webcam
-    const imageSrc = webcamRef.current.getScreenshot()
-    if (!imageSrc) return
+    const snap = webcamRef.current.getScreenshot();
+    if (!snap) return;
 
-    const img = new Image()
-    img.src = imageSrc
+    const img = new Image();
+    img.src = snap;
     img.onload = () => {
-      const canvas = canvasRef.current
-      const ctx = canvas.getContext('2d')
+      const canvas = canvasRef.current;
+      const ctx    = canvas.getContext('2d');
 
-      // Clear old drawings
-      ctx.clearRect(0, 0, canvas.width, canvas.height)
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
 
-      // Draw the image on the canvas
-      ctx.drawImage(img, 0, 0, canvas.width, canvas.height)
+      const src  = window.cv.imread(img);
+      const gray = new window.cv.Mat();
+      window.cv.cvtColor(src, gray, window.cv.COLOR_RGBA2GRAY);
 
-      // Convert to OpenCV Mat
-      let src = new window.cv.Mat(canvas.height, canvas.width, window.cv.CV_8UC4)
-      src.data.set(ctx.getImageData(0, 0, canvas.width, canvas.height).data)
+      const faces = new window.cv.RectVector();
+      cascade.detectMultiScale(gray, faces, 1.1, 3, 0);
 
-      // Convert to grayscale
-      let gray = new window.cv.Mat()
-      window.cv.cvtColor(src, gray, window.cv.COLOR_RGBA2GRAY, 0)
-
-      // Detect faces
-      let faces = new window.cv.RectVector()
-      cascade.detectMultiScale(gray, faces, 1.1, 3, 0)
-
-      // Draw bounding boxes in red
       for (let i = 0; i < faces.size(); i++) {
-        let face = faces.get(i)
-        let x = face.x
-        let y = face.y
-        let w = face.width
-        let h = face.height
-        
-        ctx.strokeStyle = 'red'
-        ctx.lineWidth = 2
-        ctx.beginPath()
-        ctx.rect(x, y, w, h)
-        ctx.stroke()
+        const { x, y, width: w, height: h } = faces.get(i);
+        ctx.strokeStyle = 'red';
+        ctx.lineWidth   = 2;
+        ctx.strokeRect(x, y, w, h);
       }
+      src.delete(); gray.delete(); faces.delete();
+    };
+  }, [cascade]);
 
-      src.delete()
-      gray.delete()
-      faces.delete()
-    }
-  }, [cascade])
-
-  // Run detection on an interval as soon as the page loads 
-  // Currently 200ms
   useEffect(() => {
-    detectionIntervalRef.current = setInterval(() => {
-      detectFaceInRealTime()
-    }, 200)
+    if (!cascade) return;
+    detectTimer.current = setInterval(detect, 200);
+    return () => clearInterval(detectTimer.current);
+  }, [cascade, detect]);
 
-    return () => {
-      if (detectionIntervalRef.current) {
-        clearInterval(detectionIntervalRef.current)
-        detectionIntervalRef.current = null
-      }
-    }
-  }, [detectFaceInRealTime])
+  const detectAndCropFace = base64 =>
+    new Promise((resolve, reject) => {
+      if (!cascade) return reject(new Error('cascade not ready'));
 
-  // Capture and Crop
-  const detectAndCropFace = (base64Image) => {
-    return new Promise((resolve, reject) => {
-      if (!cascade) {
-        return reject(new Error('Cascade not loaded yet!'))
-      }
-      const img = new Image()
-      img.src = base64Image
+      const img = new Image();
+      img.src = base64;
       img.onload = () => {
-        const offCanvas = document.createElement('canvas')
-        offCanvas.width = img.width
-        offCanvas.height = img.height
-        const offCtx = offCanvas.getContext('2d')
-        offCtx.drawImage(img, 0, 0)
+        const src  = window.cv.imread(img);
+        const gray = new window.cv.Mat();
+        window.cv.cvtColor(src, gray, window.cv.COLOR_RGBA2GRAY);
 
-        let src = new window.cv.Mat(offCanvas.height, offCanvas.width, window.cv.CV_8UC4)
-        src.data.set(offCtx.getImageData(0, 0, offCanvas.width, offCanvas.height).data)
-
-        let gray = new window.cv.Mat()
-        window.cv.cvtColor(src, gray, window.cv.COLOR_RGBA2GRAY, 0)
-
-        let faces = new window.cv.RectVector()
-        cascade.detectMultiScale(gray, faces, 1.1, 3, 0)
+        const faces = new window.cv.RectVector();
+        cascade.detectMultiScale(gray, faces, 1.1, 3, 0);
 
         if (faces.size() === 0) {
-          resolve(null)
-          src.delete()
-          gray.delete()
-          faces.delete()
-          return
+          src.delete(); gray.delete(); faces.delete();
+          return resolve(null);
         }
 
-        // Pick largest face
-        let largestFace = faces.get(0)
-        let maxArea = largestFace.width * largestFace.height
+        let best = faces.get(0), maxA = best.width * best.height;
         for (let i = 1; i < faces.size(); i++) {
-          let faceRect = faces.get(i)
-          let area = faceRect.width * faceRect.height
-          if (area > maxArea) {
-            largestFace = faceRect
-            maxArea = area
-          }
+          const f = faces.get(i), a = f.width * f.height;
+          if (a > maxA) { best = f; maxA = a; }
         }
 
-        const { x, y, width, height } = largestFace
-        const faceCanvas = document.createElement('canvas')
-        faceCanvas.width = width
-        faceCanvas.height = height
-        const faceCtx = faceCanvas.getContext('2d')
-        faceCtx.drawImage(img, x, y, width, height, 0, 0, width, height)
+        const { x, y, width: w, height: h } = best;
+        const crop = document.createElement('canvas');
+        crop.width = w; crop.height = h;
+        crop.getContext('2d').drawImage(img, x, y, w, h, 0, 0, w, h);
 
-        const croppedBase64 = faceCanvas.toDataURL('image/jpeg')
+        const out = crop.toDataURL('image/jpeg');
+        src.delete(); gray.delete(); faces.delete();
+        resolve(out);
+      };
+      img.onerror = reject;
+    });
 
-        src.delete()
-        gray.delete()
-        faces.delete()
-        resolve(croppedBase64)
-      }
-      img.onerror = (err) => reject(err)
-    })
-  }
-
-  // Capture from webcam, crop, submit to Flask
   const captureAndSubmit = useCallback(async () => {
-    if (!gender) {
-      alert('Please select Male or Female before taking the picture.')
-      return
-    }
-    const imageSrc = webcamRef.current.getScreenshot()
-    if (!imageSrc) {
-      alert('Could not capture image from webcam!')
-      return
-    }
+    if (!gender) return alert('Select Male or Female first');
+
+    const snap = webcamRef.current.getScreenshot();
+    if (!snap) return alert('Could not capture frame');
+
     try {
-      const croppedImage = await detectAndCropFace(imageSrc)
-      if (!croppedImage) {
-        alert('No face detected in captured frame! Please try again.')
-        return
-      }
-      fetch('http://127.0.0.1:5000/api/analyze', {
-        method: 'POST',
+      const cropped = await detectAndCropFace(snap);
+      if (!cropped) return alert('No face detected, retry');
+
+      const res  = await fetch('http://127.0.0.1:5000/api/analyze', {
+        method : 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          image: croppedImage,
-          gender: gender,
-        }),
-      })
-        .then((res) => res.json())
-        .then((data) => {
-          console.log('Server response:', data)
-          navigate('/results', {
-            state: {
-              faceShape: data.result,    
-              hairstyles: data.hairstyles,
-              glasses: data.glasses,
-              gender: gender
-            },
-          })
-        })
-        .catch((error) => {
-          console.error('Error:', error)
-        })
-    } catch (err) {
-      console.error('Face detection error:', err)
+        body   : JSON.stringify({ image: cropped, gender }),
+      });
+      const data = await res.json();
+      navigate('/results', {
+        state: {
+          faceShape : data.result,
+          hairstyles: data.hairstyles,
+          glasses   : data.glasses,
+          gender,
+        },
+      });
+    } catch (e) {
+      console.error(e);
+      alert('Error, check console');
     }
-  }, [gender, cascade, navigate])
+  }, [gender, cascade, navigate]);
 
   return (
     <div className="webcam-page">
@@ -222,8 +168,8 @@ const WebcamPage = () => {
 
       <div className="webcam-container">
         <Webcam
-          audio={false}
           ref={webcamRef}
+          audio={false}
           screenshotFormat="image/jpeg"
           videoConstraints={videoConstraints}
           className="webcam-video"
@@ -236,7 +182,6 @@ const WebcamPage = () => {
         />
       </div>
 
-      {/* Gender buttons */}
       <div className="gender-buttons">
         <button
           className={`gender-button ${gender === 'male' ? 'selected' : ''}`}
@@ -253,10 +198,10 @@ const WebcamPage = () => {
       </div>
 
       <button className="capture-button" onClick={captureAndSubmit}>
-        Capture & Submit
+        Capture & Submit
       </button>
     </div>
-  )
-}
+  );
+};
 
-export default WebcamPage
+export default WebcamPage;
