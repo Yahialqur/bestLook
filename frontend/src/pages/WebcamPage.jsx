@@ -202,7 +202,9 @@ const WebcamPage = () => {
           navigate('/results', {
             state: {
               faceShape: data.result,    
-              hairstyles: data.hairstyles 
+              hairstyles: data.hairstyles,
+              glasses: data.glasses,
+              gender: gender
             },
           })
         })
