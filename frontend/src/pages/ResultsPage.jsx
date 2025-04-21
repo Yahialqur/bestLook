@@ -85,14 +85,16 @@ const ResultsPage = () => {
             glasses.map(glass => (
               <div key={glass.id} className="glasses-card">
                 <h3>{glass.name}</h3>
-                <img
-                  src={glass.image}
-                  alt={glass.name}
-                  className="glasses-image"
-                  onError={e => {
-                    e.currentTarget.style.opacity = 0.2
-                  }}
-                />
+                <div className="glasses-image-wrapper">
+                  <img
+                    src={glass.image}
+                    alt={glass.name}
+                    className="glasses-image"
+                    onError={e => {
+                      e.currentTarget.style.opacity = 0.2
+                    }}
+                  />
+                </div>
                 <button className="try-now-button">Try Now</button>
               </div>
             ))

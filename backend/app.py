@@ -18,9 +18,10 @@ device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 
 model = load_model(
     model_arch,
-    r"C:\Users\mehul\Downloads\bestLook\best_model.pth",
+    "/Users/jalqur/Desktop/projects/bestLook/best_model.pth",
     device
 )
+
 glass_recommendations ={
         "heart": {
         "male": [
