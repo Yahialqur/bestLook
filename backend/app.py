@@ -18,9 +18,109 @@ device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 
 model = load_model(
     model_arch,
-    "/Users/jalqur/Desktop/projects/bestLook/best_model.pth",
+    r"C:\Users\mehul\Downloads\bestLook\best_model.pth",
     device
 )
+glass_recommendations ={
+        "heart": {
+        "male": [
+            { "id": 1, "name": "Cat Eye", "image": "/glasses/CatEye.png" },
+            { "id": 2, "name": "Rectangle", "image": "/glasses/Rectangle.png" },
+            { "id": 3, "name": "Wayfare", "image": "/glasses/Wayfare.png" },
+            { "id": 4, "name": "Browline", "image": "/glasses/Browline.png" },
+            { "id": 5, "name": "Oval", "image": "/glasses/Oval.png" }
+        ],
+        "female": [
+            { "id": 6, "name": "Cat Eye", "image": "/glasses/CatEye.png" },
+            { "id": 7, "name": "Rectangle", "image": "/glasses/Rectangle.png" },
+            { "id": 8, "name": "Wayfare", "image": "/glasses/Wayfare.png" },
+            { "id": 9, "name": "Browline", "image": "/glasses/Browline.png" },
+            { "id": 10, "name": "Oval", "image": "/glasses/Oval.png" }
+        ],
+    },
+    "oblong": {
+        "male": [
+            { "id": 11, "name": "Round", "image": "/glasses/Round.png" },
+            { "id": 12, "name": "Cat Eye", "image": "/glasses/CatEye.png" },
+            { "id": 13, "name": "Rectangle", "image": "/glasses/Rectangle.png" },
+            { "id": 14, "name": "Wayfare", "image": "/glasses/Wayfare.png" },
+            { "id": 15, "name": "Square", "image": "/glasses/Square.png" },
+            { "id": 16, "name": "Aviators", "image": "/glasses/Aviators.png" },
+            { "id": 17, "name": "Geometric", "image": "/glasses/Geometric.png" },
+            { "id": 18, "name": "Browline", "image": "/glasses/Browline.png" },
+            { "id": 19, "name": "Oval", "image": "/glasses/Oval.png" }
+        ],
+        "female": [
+            { "id": 20, "name": "Round", "image": "/glasses/Round.png" },
+            { "id": 21, "name": "Cat Eye", "image": "/glasses/CatEye.png" },
+            { "id": 22, "name": "Rectangle", "image": "/glasses/Rectangle.png" },
+            { "id": 23, "name": "Wayfare", "image": "/glasses/Wayfare.png" },
+            { "id": 24, "name": "Square", "image": "/glasses/Square.png" },
+            { "id": 25, "name": "Aviators", "image": "/glasses/Aviators.png" },
+            { "id": 26, "name": "Geometric", "image": "/glasses/Geometric.png" },
+            { "id": 27, "name": "Browline", "image": "/glasses/Browline.png" },
+            { "id": 28, "name": "Oval", "image": "/glasses/Oval.png" }
+        ],
+    
+    },
+    "oval": {
+       "male": [
+            { "id": 29, "name": "Round", "image": "/glasses/Round.png" },
+            { "id": 30, "name": "Cat Eye", "image": "/glasses/CatEye.png" },
+            { "id": 31, "name": "Rectangle", "image": "/glasses/Rectangle.png" },
+            { "id": 32, "name": "Wayfare", "image": "/glasses/Wayfare.png" },
+            { "id": 33, "name": "Square", "image": "/glasses/Square.png" },
+            { "id": 34, "name": "Aviators", "image": "/glasses/Aviators.png" },
+            { "id": 35, "name": "Geometric", "image": "/glasses/Geometric.png" },
+            { "id": 36, "name": "Browline", "image": "/glasses/Browline.png" },
+            { "id": 37, "name": "Oval", "image": "/glasses/Oval.png" }
+        ],
+        "female": [
+            { "id": 38, "name": "Round", "image": "/glasses/Round.png" },
+            { "id": 39, "name": "Cat Eye", "image": "/glasses/CatEye.png" },
+            { "id": 40, "name": "Rectangle", "image": "/glasses/Rectangle.png" },
+            { "id": 41, "name": "Wayfare", "image": "/glasses/Wayfare.png" },
+            { "id": 42, "name": "Square", "image": "/glasses/Square.png" },
+            { "id": 43, "name": "Aviators", "image": "/glasses/Aviators.png" },
+            { "id": 44, "name": "Geometric", "image": "/glasses/Geometric.png" },
+            { "id": 45, "name": "Browline", "image": "/glasses/Browline.png" },
+            { "id": 46, "name": "Oval", "image": "/glasses/Oval.png" }
+        ],
+    },
+    "round": {
+        "male": [
+            { "id": 47, "name": "Rectangle", "image": "/glasses/Rectangle.png" },
+            { "id": 48, "name": "Square", "image": "/glasses/Square.png" },
+            { "id": 49, "name": "Aviators", "image": "/glasses/Aviators.png" },
+            { "id": 50, "name": "Geometric", "image": "/glasses/Geometric.png" },
+        ],
+        "female": [
+            { "id": 51, "name": "Rectangle", "image": "/glasses/Rectangle.png" },
+            { "id": 52, "name": "Square", "image": "/glasses/Square.png" },
+            { "id": 53, "name": "Aviators", "image": "/glasses/Aviators.png" },
+            { "id": 54, "name": "Geometric", "image": "/glasses/Geometric.png" },
+        ]
+    },
+    "square": {
+        "male": [
+            { "id": 55, "name": "Round", "image": "/glasses/Round.png" },
+            { "id": 56, "name": "Cat Eye", "image": "/glasses/CatEye.png" },
+            { "id": 57, "name": "Wayfare", "image": "/glasses/Wayfare.png" },
+            { "id": 58, "name": "Aviators", "image": "/glasses/Aviators.png" },
+            { "id": 59, "name": "Browline", "image": "/glasses/Browline.png" },
+            { "id": 60, "name": "Oval", "image": "/glasses/Oval.png" }
+        ],
+        "female": [
+            { "id": 61, "name": "Round", "image": "/glasses/Round.png" },
+            { "id": 62, "name": "Cat Eye", "image": "/glasses/CatEye.png" },
+            { "id": 63, "name": "Wayfare", "image": "/glasses/Wayfare.png" },
+            { "id": 64, "name": "Aviators", "image": "/glasses/Aviators.png" },
+            { "id": 65, "name": "Geometric", "image": "/glasses/Geometric.png" },
+            { "id": 66, "name": "Browline", "image": "/glasses/Browline.png" },
+            { "id": 67, "name": "Oval", "image": "/glasses/Oval.png" }
+        ]
+    }
+}
 
 hairstyle_recommendations = {
     "heart": {
@@ -121,14 +221,29 @@ def analyze_image():
         pil_image = Image.open(io.BytesIO(decoded_bytes)).convert("RGB")
 
         face_shape = predict_face_shape(pil_image, model, device)
-        recommended = hairstyle_recommendations.get(face_shape, {}).get(gender, [])
-        print("Predicted face shape:", face_shape, flush=True)
-        print("Recommended hairstyles:", recommended, flush=True)
+        print(f"Predicted face shape: {face_shape}", flush=True)
+        print(f"Gender: {gender}", flush=True)
+        
+        # Debug logs for hairstyle recommendations
+        print(f"Available face shapes in hairstyle_recommendations: {list(hairstyle_recommendations.keys())}", flush=True)
+        print(f"Available genders for {face_shape}: {list(hairstyle_recommendations.get(face_shape, {}).keys())}", flush=True)
+        recommended_hairstyles = hairstyle_recommendations.get(face_shape, {}).get(gender, [])
+        print(f"Recommended hairstyles: {recommended_hairstyles}", flush=True)
+        
+        # Debug logs for glasses recommendations
+        print(f"Available face shapes in glass_recommendations: {list(glass_recommendations.keys())}", flush=True)
+        print(f"Available genders for {face_shape}: {list(glass_recommendations.get(face_shape, {}).keys())}", flush=True)
+        recommended_glasses = glass_recommendations.get(face_shape, {}).get(gender, [])
+        print(f"Recommended glasses: {recommended_glasses}", flush=True)
 
-        return jsonify({
+        response_data = {
             "result": face_shape,
-            "hairstyles": recommended
-        }), 200
+            "hairstyles": recommended_hairstyles,
+            "glasses": recommended_glasses
+        }
+        print(f"Sending response: {response_data}", flush=True)
+        
+        return jsonify(response_data), 200
 
     except Exception as e:
         print("Error analyzing image:", e)

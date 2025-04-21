@@ -1,12 +1,20 @@
 // src/pages/ResultsPage.jsx
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Link, useLocation } from 'react-router-dom'
 import '../styles/ResultsPage.css'
 
 const ResultsPage = () => {
   const location = useLocation()
-  const { faceShape, hairstyles } = location.state || {}
+  const { faceShape, hairstyles, glasses } = location.state || {}
   const gender = location.state?.gender || 'male'
+
+  // Add debug logs
+  useEffect(() => {
+    console.log('Location state:', location.state)
+    console.log('Face shape:', faceShape)
+    console.log('Hairstyles:', hairstyles)
+    console.log('Glasses:', glasses)
+  }, [location.state, faceShape, hairstyles, glasses])
 
   /* Bail out if required data missing */
   if (!faceShape || !hairstyles) {
@@ -70,15 +78,27 @@ const ResultsPage = () => {
           )}
         </div>
 
-        {/* Glasses placeholder */}
+        {/* Glasses recommendations */}
         <h2 className="section-title">Recommended Glasses</h2>
         <div className="glasses-list">
-          {[1, 2, 3].map(i => (
-            <div key={i} className="glasses-card">
-              <div className="glasses-image-placeholder">Image Coming Soon</div>
-              <p className="placeholder-text">Recommendation Coming Soon</p>
-            </div>
-          ))}
+          {glasses && glasses.length > 0 ? (
+            glasses.map(glass => (
+              <div key={glass.id} className="glasses-card">
+                <h3>{glass.name}</h3>
+                <img
+                  src={glass.image}
+                  alt={glass.name}
+                  className="glasses-image"
+                  onError={e => {
+                    e.currentTarget.style.opacity = 0.2
+                  }}
+                />
+                <button className="try-now-button">Try Now</button>
+              </div>
+            ))
+          ) : (
+            <p>No recommended glasses found.</p>
+          )}
         </div>
       </div>
     </>
