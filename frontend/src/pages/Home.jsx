@@ -92,7 +92,7 @@ const Home = () => {
         {/* CTA */}
         <section className="final-cta-section">
           <h2>Ready to discover your perfect look?</h2>
-          <button className="gold-button">Get Started Now</button>
+          <button className="gold-button" onClick={() => window.location.href = '/webcam'}>Get Started Now</button>
         </section>
       </main>
       < Footer />
