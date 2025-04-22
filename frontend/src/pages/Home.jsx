@@ -3,7 +3,7 @@ import '../styles/Home.css'
 
 import Footer from '../components/Footer'
 
-import logo from "/bestLook_logo.png"
+import logo from "/bestLook_whiteLogo.png"
 
 import ugly from "../assets/home_images/home_ugly.png"
 import sexy from "../assets/home_images/home_sexy.png"
