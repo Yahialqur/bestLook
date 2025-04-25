@@ -21,8 +21,7 @@ const Home = () => {
               Find Your <span className="gold-text">Best Look!</span>
             </h1>
             <p className="hero-subtitle">
-              Discover the perfect hairstyle, facial hair, glasses, and accessories
-              that complement your unique face shape.
+              Discover the perfect hairstyle, facial hair, and glasses that complement your unique face shape.
             </p>
             <button className="gold-button" onClick={() => window.location.href = '/webcam'}>Get Started</button>
           </div>
