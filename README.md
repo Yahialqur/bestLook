@@ -62,7 +62,7 @@ Accepts a base64-encoded image and selected gender, returns a predicted face sha
 ## 🖼️ Demo Screenshots
 
 ### 🏠 Home Page
-![Home Page](./assets/bestLook1.png)
+![Home Page](./assets/bestLookHome.png)
 
 ### ✨ Our Mission
 ![Our Mission](./assets/bestLook2.png)
@@ -71,7 +71,8 @@ Accepts a base64-encoded image and selected gender, returns a predicted face sha
 ![Webcam](./assets/bestLook3.jpg)
 
 ### 🧠 Results Page
-![Results Page](./assets/bestLook4.jpg)
+![Results Page 1](./assets/results1.png)
+![Results Page 2](./assets/result2.png)
 
 ---
 
@@ -81,8 +82,8 @@ Accepts a base64-encoded image and selected gender, returns a predicted face sha
 - Face Detection: The app uses OpenCV.js for detecting the face area.
 - Face Shape Prediction: The backend runs the captured face through a fine-tuned VGG16 model to classify the user's face shape (oval, heart, square, round, oblong).
 - Personalized Recommendations: Based on the face shape and gender, the system provides: 
-* A set of recommended hairstyles.
-* A set of recommended glasses.
+  - A set of recommended hairstyles.
+  - A set of recommended glasses.
 - Interactive Results Page: Users can view and explore different recommended styles and eyewear.
 
 ---
