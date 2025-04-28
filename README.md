@@ -1,6 +1,6 @@
 # 🧠 Face Shape Analyzer & Style Recommender
 
-This project uses AI to detect your face shape through a webcam and recommends personalized hairstyles based on your facial features and structure.
+This project uses AI to detect your face shape through a webcam and recommends personalized hairstyles and glasses based on your facial features and structure.
 
 ## 🌐 Live Demo
 [Coming Soon]
@@ -15,7 +15,7 @@ This project uses AI to detect your face shape through a webcam and recommends p
 
 - Face detection with webcam
 - Face shape classification using a fine-tuned VGG16 model
-- Personalized hairstyle suggestions for both male and female users
+- Personalized hairstyle and glasses suggestions for both male and female users
 - Interactive UI to view results and try different looks
 
 ---
@@ -45,6 +45,14 @@ Accepts a base64-encoded image and selected gender, returns a predicted face sha
       "image": "/images/male/buzz-cut.jpg"
     },
     ...
+  ],
+  "glasses": [
+    {
+      "id": 29,
+      "name": "Round",
+      "image": "/glasses/Round.png"
+    },
+    ...
   ]
 }
 ```
@@ -64,6 +72,18 @@ Accepts a base64-encoded image and selected gender, returns a predicted face sha
 
 ### 🧠 Results Page
 ![Results Page](./assets/bestLook4.jpg)
+
+---
+
+## 📖 How it works
+
+- Webcam Capture: Users capture a selfie directly through their webcam.
+- Face Detection: The app uses OpenCV.js for detecting the face area.
+- Face Shape Prediction: The backend runs the captured face through a fine-tuned VGG16 model to classify the user's face shape (oval, heart, square, round, oblong).
+- Personalized Recommendations: Based on the face shape and gender, the system provides: 
+* A set of recommended hairstyles.
+* A set of recommended glasses.
+- Interactive Results Page: Users can view and explore different recommended styles and eyewear.
 
 ---
 
